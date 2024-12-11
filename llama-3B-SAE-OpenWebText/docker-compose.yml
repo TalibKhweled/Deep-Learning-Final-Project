@@ -1,0 +1,27 @@
+
+services:
+  python-app:
+    image: llama-3b-sae-tinystories
+    build:
+      context: .
+      dockerfile: Dockerfile
+      secrets:
+        - hf_token
+        - wandb_token
+    secrets:
+      - hf_token
+      - wandb_token
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: "nvidia"
+              count: 1
+              capabilities: ["gpu"]
+
+secrets:
+  hf_token:
+    file: ./hf_token.txt
+  wandb_token:
+    file: ./wandb_token.txt
+
